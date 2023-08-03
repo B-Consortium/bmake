@@ -22,7 +22,7 @@ CXXFLAGS ?= -Wextra -Wall -O2
 BMAKE_SRCS := $(wildcard $(SRC)/*.c $(SRC)/*.cpp)
 BMAKE_OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(patsubst $(SRC)/%.cpp,$(OBJ)/%.o,$(BMAKE_SRCS)))
 
-bmake: $(OBJ)/bmake.o $(BMAKE_OBJS) | $(BIN)
+bmake: $(OBJ)/bmake.o $(OBJ)/functions.o $(BMAKE_OBJS) | $(BIN)
 	$(CXX) $(CXXFLAGS) -o $(BIN)/$@ $^ -lcurl
 
 all: bmake
