@@ -8,4 +8,4 @@ updates:
   - package-ecosystem: "github-actions"  # A placeholder for C code; adjust as needed.
     directory: "src"  # Location of your C source code.
     schedule:
-      interval: "hourly"  # Update frequency.
+      interval: "daily"  # Update frequency.
