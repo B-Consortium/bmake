@@ -12,8 +12,7 @@
 void createGitIgnoreFile();
 void createLicenseFile();
 void createManPage(const char *name, const char *shortDesc, const char *longDesc);
-void createSpecFile(const char *name, const char *version, const char *release, const char *summary,
-                   const char *description, const char *license, const char *url, const char *source0, const char *buildRoot);
+void createSpecFile(const char *name, const char *summary, const char *longDesc)
 void generateMakefile(const char *target, const char *sources);
 void generateSourceFiles(const char *parameter, const char *sourceFiles);
 
