@@ -122,8 +122,7 @@ void createManPage(const char *name, const char *shortDesc, const char *longDesc
     printf("%s file created successfully.\n", filename);
 }
 
-void createSpecFile(const char *name, const char *version, const char *release, const char *summary,
-                   const char *description, const char *license, const char *url, const char *source0, const char *buildRoot) {
+void createSpecFile(const char *name, const char *summary, const char *longDesc) {
     char filename[50];
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
@@ -142,21 +141,21 @@ void createSpecFile(const char *name, const char *version, const char *release, 
     strftime(date, sizeof(date), "%d %B %Y", &tm);
 
     fprintf(file, "Name:           %s\n", name);
-    fprintf(file, "Version:        %s\n", version);
-    fprintf(file, "Release:        %s\n", release);
-    fprintf(file, "Summary:        %s\n", summary);
+    fprintf(file, "Version:        0.0.1\n"); // Fixed version
+    fprintf(file, "Release:        1%%{?dist}\n"); // Fixed release
+    fprintf(file, "Summary:        %s\n", summary); // Updated line to use input summary
     fprintf(file, "Group:          Development/Tools\n");
-    fprintf(file, "License:        %s\n", license);
-    fprintf(file, "URL:            %s\n", url);
-    fprintf(file, "Source0:        %s\n", source0);
-    fprintf(file, "BuildRoot:      %s\n", buildRoot);
+    fprintf(file, "License:        B-License\n");
+    fprintf(file, "URL:            https://github.com/B-Consortium/%s\n", name); // URL is based on the parameter
+    fprintf(file, "Source0:        https://github.com/B-Consortium/%s/archive/v0.0.1.tar.gz\n", name); // Source0 based on parameter
+    fprintf(file, "BuildRoot:      %(mktemp -ud %%{_tmppath}/%%{name}-0.0.1-1-XXXXXX)\n"); // Fixed version and release
     fprintf(file, "BuildRequires:  ncurses-devel\n");
     fprintf(file, "\n");
     fprintf(file, "%%description\n");
-    fprintf(file, "%s\n", description);
+    fprintf(file, "%s\n", longDesc);
     fprintf(file, "\n");
     fprintf(file, "%%prep\n");
-    fprintf(file, "%%setup -q -n %%{name}-%%{version}\n");
+    fprintf(file, "%%setup -q -n %%{name}-0.0.1\n"); // Fixed version
     fprintf(file, "\n");
     fprintf(file, "%%build\n");
     fprintf(file, "make %s\n", name);
@@ -176,6 +175,7 @@ void createSpecFile(const char *name, const char *version, const char *release, 
     fclose(file);
     printf("%s file created successfully.\n", filename);
 }
+
 
 void generateMakefile(const char *target, const char *sources) {
     FILE *makefile = fopen("Makefile", "w");
